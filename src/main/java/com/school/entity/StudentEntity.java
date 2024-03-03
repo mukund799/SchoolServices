@@ -1,13 +1,21 @@
 package com.school.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "School", uniqueConstraints = @UniqueConstraint(columnNames = {"rollNo"}))
 public class StudentEntity {
+	
 	private int id;
 	private String name;
 	private String fatherName;
 	private String motherName;
+	@Id
+	@Column(unique = true)
 	private String rollNo;
 	private String section;
 	private String className;
@@ -18,7 +26,6 @@ public class StudentEntity {
 	}
 	public StudentEntity(int id, String name, String fatherName, String motherName, String rollNo, String section,
 			String className) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.fatherName = fatherName;
