@@ -1,11 +1,14 @@
 package com.school.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.entity.StudentEntity;
@@ -14,7 +17,10 @@ import com.school.service.StudentService;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-
+	
+	@Autowired
+	StudentService service;
+	
 	@GetMapping("/start")
 	public String test() {
 		return "Hello bachho, Kaise ho bete!!";
@@ -22,15 +28,50 @@ public class StudentController {
 	
 	
 	// to add student details into the database
-	@Autowired
-	StudentService service;
+//	@GetMapping("/getPaymentsDetails/{id}")
+//	public ResponseEntity<?> getPaymentsDetails(@PathVariable String id){
+//		
+//		StudentEntity entity =  service.getDetailsOfPayment(id);
+//		if ( entity != null)
+//		return new ResponseEntity<>(entity, HttpStatus.OK);
+//        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID " + id + " not found");
+//		
+//		return new ResponseEntity<>("Student with id "+id+" not ffound", HttpStatus.NOT_FOUND);
+//	}
 	@PostMapping("/addDetails")
-	public String addDetails(@RequestBody StudentEntity s) {
-		String rn = s.getClassName()+s.getRollNo();
+	public ResponseEntity<String> addDetails(@RequestBody StudentEntity s) {
+		String rn = s.getClassName() + s.getSection() + s.getRollNo();
 		s.setRollNo(rn);
 		StudentEntity rs = service.saveStudentData(s);
 		if (rs != null)
-		 return "Student Details Addedd.";
-		else return " student details not saved";
+		 return new ResponseEntity<>("Student Details Addedd.", HttpStatus.OK);
+		else return new ResponseEntity<> ("student details already saved.", HttpStatus.CONFLICT );
 	}
+	
+	@GetMapping("/getAllDetails")
+	public ResponseEntity<List<StudentEntity>> getAllDetails(){
+		List<StudentEntity> list =  service.getAllDetailsOfStudent();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getDetails/{id}")
+	public ResponseEntity<?> getDetails(@PathVariable String id){
+		
+		StudentEntity entity =  service.getDetailsOfStudent(id);
+		if ( entity != null)
+		return new ResponseEntity<>(entity, HttpStatus.OK);
+        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID " + id + " not found");
+		
+		return new ResponseEntity<>("Student with id "+id+" not ffound", HttpStatus.NOT_FOUND);
+	}
+
+	@GetMapping("getDetailsByname/{name}")
+	public ResponseEntity<?> getDetailsByName(@PathVariable String name){
+		
+		StudentEntity se = service.getDetailsByName(name);
+		if ( se != null)
+			return new ResponseEntity<>(se, HttpStatus.OK);
+		return new ResponseEntity<>("Student with name "+name +" not found", HttpStatus.NOT_FOUND);
+	}
+
 }

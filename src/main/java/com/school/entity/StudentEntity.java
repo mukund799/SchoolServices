@@ -1,13 +1,24 @@
 package com.school.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "School", uniqueConstraints = @UniqueConstraint(columnNames = {"rollNo"}))
+@Data
+@NoArgsConstructor
 public class StudentEntity {
 	
 	private int id;
@@ -19,8 +30,11 @@ public class StudentEntity {
 	private String rollNo;
 	private String section;
 	private String className;
+	
+	@OneToMany( cascade = CascadeType.ALL)
+	private List<FeePayment> feePayments = new ArrayList<>();
 
-	public StudentEntity() {
+	StudentEntity() {
 		//super();
 		// TODO Auto-generated constructor stub
 	}
@@ -76,6 +90,12 @@ public class StudentEntity {
 	}
 	public void setClassName(String className) {
 		this.className = className;
+	}
+	public List<FeePayment> getFeePayments() {
+		return feePayments;
+	}
+	public void setFeePayments(List<FeePayment> feePayments) {
+		this.feePayments = feePayments;
 	}
 	
 }
