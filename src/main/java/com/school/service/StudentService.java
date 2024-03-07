@@ -25,11 +25,11 @@ public class StudentService {
 		if(s == null) {
 			StudentEntity result =  sr.save(se);
 			// Create fee payment entry for the student
-	        FeePayment feePayment = new FeePayment();
-	        feePayment.setStudent(result);
-	        // Set other fee payment details
-	        
-	        fs.save(feePayment);
+//	        FeePayment feePayment = new FeePayment();
+//	        feePayment.setStudent(result);
+//	        // Set other fee payment details
+//	        
+//	        fs.save(feePayment);
 	        return result;
 		}
 		return null;

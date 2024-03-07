@@ -11,9 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.school.entity.FeePayment;
 import com.school.entity.StudentEntity;
 import com.school.service.StudentService;
 
+import ch.qos.logback.classic.Logger;
+
+import org.apache.logging.slf4j.SLF4JLogger;
+
+import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -40,9 +46,17 @@ public class StudentController {
 //	}
 	@PostMapping("/addDetails")
 	public ResponseEntity<String> addDetails(@RequestBody StudentEntity s) {
+		
 		String rn = s.getClassName() + s.getSection() + s.getRollNo();
 		s.setRollNo(rn);
+		FeePayment f = new FeePayment();
+		f.setMonth(s.getFeePayments().getMonth());
+		f.setPaid(s.getFeePayments().getPaid());
+		f.setYear((s.getFeePayments().getYear()));
+		f.setStudent(s);
+		s.setFeePayments(f);
 		StudentEntity rs = service.saveStudentData(s);
+		
 		if (rs != null)
 		 return new ResponseEntity<>("Student Details Addedd.", HttpStatus.OK);
 		else return new ResponseEntity<> ("student details already saved.", HttpStatus.CONFLICT );

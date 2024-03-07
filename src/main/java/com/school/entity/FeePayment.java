@@ -16,6 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -23,8 +24,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FeePayment {
-	
-	
+		public FeePayment() {
+		super();
+	}
+
 		public FeePayment(Long idF, String month, String year, String paid, StudentEntity student) {
 		super();
 		this.idF = idF;
@@ -33,16 +36,7 @@ public class FeePayment {
 		this.paid = paid;
 		this.student = student;
 	}
-		public FeePayment() {
-		super();
-	}
-		public FeePayment(Long idF, String month, String year, String paid) {
-		super();
-		this.idF = idF;
-		this.month = month;
-		this.year = year;
-		this.paid = paid;
-	}
+
 		@Id
 	    @GeneratedValue(strategy = GenerationType.AUTO)
 	    private Long idF;
@@ -50,38 +44,49 @@ public class FeePayment {
 	    private String year;
 	    private String paid;
 	    
-	    @ManyToOne
-	    @JoinColumn(name = "rollNo", referencedColumnName = "rollNo")
+	    @OneToOne
+	    @JoinColumn(name = "fk_rollNo", referencedColumnName = "rollNo")
 	    private StudentEntity student;
 
 		public Long getIdF() {
 			return idF;
 		}
+
 		public void setIdF(Long idF) {
 			this.idF = idF;
 		}
+
 		public String getMonth() {
 			return month;
 		}
+
 		public void setMonth(String month) {
 			this.month = month;
 		}
+
 		public String getYear() {
 			return year;
 		}
+
 		public void setYear(String year) {
 			this.year = year;
 		}
+
 		public String getPaid() {
 			return paid;
 		}
+
 		public void setPaid(String paid) {
 			this.paid = paid;
 		}
+
 		public StudentEntity getStudent() {
 			return student;
 		}
+
 		public void setStudent(StudentEntity student) {
 			this.student = student;
 		}
+
+		
 }
