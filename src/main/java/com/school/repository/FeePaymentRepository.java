@@ -8,4 +8,5 @@ import com.school.entity.FeePayment;
 @Repository
 public interface FeePaymentRepository extends JpaRepository<FeePayment, Long> {
 
+	
 }

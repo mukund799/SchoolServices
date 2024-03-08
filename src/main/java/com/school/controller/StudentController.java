@@ -1,5 +1,6 @@
 package com.school.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,11 +51,15 @@ public class StudentController {
 		String rn = s.getClassName() + s.getSection() + s.getRollNo();
 		s.setRollNo(rn);
 		FeePayment f = new FeePayment();
-		f.setMonth(s.getFeePayments().getMonth());
-		f.setPaid(s.getFeePayments().getPaid());
-		f.setYear((s.getFeePayments().getYear()));
 		f.setStudent(s);
-		s.setFeePayments(f);
+		f.setMonth(s.getFeePayments().get(0).getMonth());
+		f.setPaid(s.getFeePayments().get(0).getPaid());
+		f.setYear((s.getFeePayments().get(0).getYear()));
+		f.setStudent(s);
+//		s.setFeePayments(f);
+		List<FeePayment> arr = new ArrayList<>();
+		arr.add(f);
+		s.setFeePayments(arr);
 		StudentEntity rs = service.saveStudentData(s);
 		
 		if (rs != null)

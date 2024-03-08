@@ -44,7 +44,7 @@ public class FeePayment {
 	    private String year;
 	    private String paid;
 	    
-	    @OneToOne
+	    @ManyToOne
 	    @JoinColumn(name = "fk_rollNo", referencedColumnName = "rollNo")
 	    private StudentEntity student;
 

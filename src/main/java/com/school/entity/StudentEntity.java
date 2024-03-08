@@ -21,6 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StudentEntity {
 	
+	public StudentEntity(int id, String name, String fatherName, String motherName, String rollNo, String section,
+			String className, List<FeePayment> feePayments) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.fatherName = fatherName;
+		this.motherName = motherName;
+		this.rollNo = rollNo;
+		this.section = section;
+		this.className = className;
+		this.feePayments = feePayments;
+	}
+
 	public StudentEntity() {
 		super();
 	}
@@ -35,7 +48,7 @@ public class StudentEntity {
 		this.rollNo = rollNo;
 		this.section = section;
 		this.className = className;
-		this.feePayments = feePayments;
+//		this.feePayments = feePayments;
 	}
 
 	private int id;
@@ -47,8 +60,8 @@ public class StudentEntity {
 	private String section;
 	private String className;
 	
-	@OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
-	private FeePayment feePayments;
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+	private List<FeePayment> feePayments = new ArrayList<>();
 
 	public int getId() {
 		return id;
@@ -106,13 +119,25 @@ public class StudentEntity {
 		this.className = className;
 	}
 
-	public FeePayment getFeePayments() {
+	public List<FeePayment> getFeePayments() {
 		return feePayments;
 	}
 
-	public void setFeePayments(FeePayment feePayments) {
+	public void setFeePayments(List<FeePayment> feePayments) {
 		this.feePayments = feePayments;
 	}
+
+//	public FeePayment getFeePayments() {
+//		return feePayments;
+//	}
+//
+//	public void setFeePayments(FeePayment feePayments) {
+//		this.feePayments = feePayments;
+//	}
+
+//	public void setFeePayments(List<FeePayment> feePayments) {
+//		this.feePayments = feePayments;
+//	}
 
 	
 	
