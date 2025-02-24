@@ -19,14 +19,6 @@ public class FeePamentController {
 	@PostMapping("/payment/{rollNo}")
 	public String FeePaymentForRollno(@RequestBody FeePayment fp, @PathVariable String rollNo) {
 		StudentEntity s = new StudentEntity();
-		s.setRollNo(rollNo);
-	
-		FeePayment result = new FeePayment();
-		result.setMonth(fp.getMonth());
-		result.setPaid(fp.getPaid());
-		result.setYear(fp.getYear());
-		result.setStudent(s);
-		fps.save(result);
 		return " payment addedd";
 	}
 }

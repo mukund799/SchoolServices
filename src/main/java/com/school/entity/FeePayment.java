@@ -19,8 +19,6 @@ import lombok.Setter;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class FeePayment {
@@ -48,44 +46,9 @@ public class FeePayment {
 	    @JoinColumn(name = "fk_rollNo", referencedColumnName = "rollNo")
 	    private StudentEntity student;
 
-		public Long getIdF() {
-			return idF;
-		}
-
-		public void setIdF(Long idF) {
-			this.idF = idF;
-		}
-
-		public String getMonth() {
-			return month;
-		}
-
-		public void setMonth(String month) {
-			this.month = month;
-		}
-
-		public String getYear() {
-			return year;
-		}
-
-		public void setYear(String year) {
-			this.year = year;
-		}
-
-		public String getPaid() {
-			return paid;
-		}
-
-		public void setPaid(String paid) {
-			this.paid = paid;
-		}
-
-		public StudentEntity getStudent() {
-			return student;
-		}
-
-		public void setStudent(StudentEntity student) {
-			this.student = student;
+		public Object getPaid() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
 		

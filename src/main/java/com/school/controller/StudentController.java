@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.school.entity.BeanTest;
 import com.school.entity.FeePayment;
 import com.school.entity.StudentEntity;
 import com.school.service.StudentService;
@@ -26,40 +27,32 @@ import lombok.extern.slf4j.Slf4j;
 public class StudentController {
 	
 	@Autowired
+	BeanTest bt;
+	
+	@Autowired
 	StudentService service;
 	
 	@GetMapping("/start")
 	public String test() {
-		return "Hello bachho, Kaise ho bete!!";
+		String res  = bt.BeanTest("Mukund Narayan");
+		return "Hello bachho, Kaise ho bete!!" + res;
 	}
 	
-	
-	// to add student details into the database
-//	@GetMapping("/getPaymentsDetails/{id}")
-//	public ResponseEntity<?> getPaymentsDetails(@PathVariable String id){
-//		
-//		StudentEntity entity =  service.getDetailsOfPayment(id);
-//		if ( entity != null)
-//		return new ResponseEntity<>(entity, HttpStatus.OK);
-//        //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Student with ID " + id + " not found");
-//		
-//		return new ResponseEntity<>("Student with id "+id+" not ffound", HttpStatus.NOT_FOUND);
-//	}
 	@PostMapping("/addDetails")
 	public ResponseEntity<String> addDetails(@RequestBody StudentEntity s) {
 		
-		String rn = s.getClassName() + s.getSection() + s.getRollNo();
-		s.setRollNo(rn);
-		FeePayment f = new FeePayment();
-		f.setStudent(s);
-		f.setMonth(s.getFeePayments().get(0).getMonth());
-		f.setPaid(s.getFeePayments().get(0).getPaid());
-		f.setYear((s.getFeePayments().get(0).getYear()));
-		f.setStudent(s);
-//		s.setFeePayments(f);
-		List<FeePayment> arr = new ArrayList<>();
-		arr.add(f);
-		s.setFeePayments(arr);
+//		String rn = s.getClassName() + s.getSection() + s.getRollNo();
+//		s.setRollNo(rn);
+//		FeePayment f = new FeePayment();
+//		f.setStudent(s);
+//		f.setMonth(s.getFeePayments().get(0).getMonth());
+//		f.setPaid(s.getFeePayments().get(0).getPaid());
+//		f.setYear((s.getFeePayments().get(0).getYear()));
+//		f.setStudent(s);
+////		s.setFeePayments(f);
+//		List<FeePayment> arr = new ArrayList<>();
+//		arr.add(f);
+//		s.setFeePayments(arr);
 		StudentEntity rs = service.saveStudentData(s);
 		
 		if (rs != null)

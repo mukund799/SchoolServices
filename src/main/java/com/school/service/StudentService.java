@@ -18,7 +18,7 @@ public class StudentService {
 	@Autowired
 	FeePaymentRepository fs;
 	public  StudentEntity saveStudentData(StudentEntity se) {
-		StudentEntity s = sr.findById(se.getRollNo()).orElse(null);
+		StudentEntity s = sr.findById("a").orElse(null);
 		//Student savedStudent = studentRepository.save(student);
         
         
