@@ -1,8 +1,8 @@
 package com.school.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,30 +12,49 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.school.entity.BeanTest;
-import com.school.entity.FeePayment;
+import com.school.beantest.PrototypeScope;
+import com.school.beantest.SingletonScope;
 import com.school.entity.StudentEntity;
 import com.school.service.StudentService;
 
-import ch.qos.logback.classic.Logger;
-
-import org.apache.logging.slf4j.SLF4JLogger;
-
-import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/student")
 public class StudentController {
 	
+	private final SingletonScope sbt1;
+	
+	
 	@Autowired
-	BeanTest bt;
+	public StudentController(SingletonScope sbt1) {
+		this.sbt1 = sbt1;
+	}
+	
+	private PrototypeScope bt;
+	@Autowired(required = false)
+	public void setStudentController(PrototypeScope bt) {
+		this.bt = bt;
+	}
+	
+	
 	
 	@Autowired
 	StudentService service;
 	
+	@Value("${app.name}")
+	String name;
 	@GetMapping("/start")
 	public String test() {
-		String res  = bt.BeanTest("Mukund Narayan");
-		return "Hello bachho, Kaise ho bete!!" + res;
+		
+       
+		String res  = sbt1.BeanTest("Mukund Narayan");
+		String res2  = bt.beantest("Mukund 2");
+//		if(sbt1==sbt2) {
+//			System.out.println("true");
+//		}
+//		else {
+//			System.out.println("false");
+//		}
+		return "Hello bachho, Kaise ho bete!!" +" name is: "+name+ res+" singletoneScope is: "+ res2;
 	}
 	
 	@PostMapping("/addDetails")
